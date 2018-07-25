@@ -1,5 +1,5 @@
 {
-    "name": "fan_points",
+    "name": "fanboy/fan_points",
     "description": "Integrates Point reward system",
     "require": {
         "php": "^5.3.3 || ^7.0"
