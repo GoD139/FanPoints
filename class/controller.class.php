@@ -85,38 +85,69 @@ class controller extends fanPoints
     if($this->is_user_logged_in()){
 
 
-      echo 'is logged in';
+      // echo 'is logged in';
+      //
+      //
+      // echo $this->get_order_price();
+
+      echo $this->check_if_order_have_given_points($_GET['key']);
+
+      echo $this->get_order_price() .'<br>';
+
+      echo wc_get_order_id_by_order_key($_GET['key']);
+
+      //echo get_user_meta(get_current_user_id() , 'FanPoints')[0];
+
+      echo get_the_author_meta( 'FanPoints', get_current_user_id() );
+
+      if(!$this->check_if_order_have_given_points($_GET['key']))
+      {
+        $this->give_points($this->get_order_price());
+        $this->give_order_points($_GET['key']);
+      }
 
 
-      echo $this->get_order_price();
-
-      $this->give_points($this->get_order_price());
 
 
 
-    }else{
-      echo 'is NOT logged in';
+
     }
  }
 
 
  //check if user have already received points for their order
  //so they dont get more points if they reload their thank-you page
- function check_if_order_have_given_points()
+ function check_if_order_have_given_points($postKey)
  {
-
+   $orderId = wc_get_order_id_by_order_key($postKey);
+   if(get_post_meta( $orderId, 'fb_point_given')){
+       return true;
+    }
+    return false;
  }
 
 
-
+ //Save the order that have given points, so we can check if order should give points
+ function give_order_points($postKey)
+ {
+    $orderId = wc_get_order_id_by_order_key($postKey);
+    add_post_meta( $orderId, 'fb_point_given', 1, true );
+ }
 
 
   private function give_points($purchaseCost)
   {
+    $PlayersCurrentPoints = 0;
+    if(get_user_meta(get_current_user_id() , 'FanPoints')){
+      $PlayersCurrentPoints = get_user_meta(get_current_user_id() , 'FanPoints')[0];
+    }
+
     if (wc_memberships_is_user_active_member($user_id, 'Premium Subscription')){
       $amount = get_option('fanpoint_options')['FP_Receives_Premium'] * $purchaseCost;
+      $amount += $PlayersCurrentPoints;
     }else if (wc_memberships_is_user_active_member($user_id, 'Basic Subscription')){
       $amount = get_option('fanpoint_options')['FP_Receives_Basic'] * $purchaseCost;
+      $amount += $PlayersCurrentPoints;
     }
     return update_user_meta( get_current_user_id(), 'FanPoints', $amount);
   }
@@ -140,7 +171,6 @@ class controller extends fanPoints
        $orderPrice = get_post_meta($order->ID, '_order_total')[0];
      }
    }
-
    return $orderPrice;
  }
 

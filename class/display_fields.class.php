@@ -81,7 +81,6 @@ class displayFields extends fanPoints
    */
   function fanpoints_user_table_row( $val, $column_name, $user_id ) {
 
-
     $UsersFanPoints = get_the_author_meta( 'FanPoints', $user_id );
 
     if($column_name == 'FanPoints'){
@@ -93,11 +92,6 @@ class displayFields extends fanPoints
     return $val;
   }
 
-
-  private function FP_Worth()
-  {
-    return (float)$this->Settings['FP_Worth'];
-  }
 
 
 
