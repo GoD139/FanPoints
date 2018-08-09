@@ -1,6 +1,7 @@
 {
     "name": "fanboy/fan_points",
     "description": "Integrates Point reward system",
+    "type": "wordpress-plugin",
     "require": {
         "php": "^5.3.3 || ^7.0"
     }
