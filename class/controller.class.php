@@ -13,7 +13,17 @@ class controller extends fanPoints
   function __construct()
   {
 
-
+    /**
+  	 * Returns the product discounted price for a member user.
+  	 *
+  	 * @since 1.3.0
+  	 *
+  	 * @param float $base_price original price
+  	 * @param int|\WC_Product $product product ID or product object.
+  	 * @param int|null $member_id optional, defaults to current user ID
+  	 * @return float|null the discounted price or null if no discount applies
+  	 */
+    //get_discounted_price( $base_price, $product, $member_id = null )
 
     // echo '<pre>';
     // print_r($this->Woocommerce);
@@ -90,15 +100,15 @@ class controller extends fanPoints
       //
       // echo $this->get_order_price();
 
-      echo $this->check_if_order_have_given_points($_GET['key']);
-
-      echo $this->get_order_price() .'<br>';
-
-      echo wc_get_order_id_by_order_key($_GET['key']);
+      // echo $this->check_if_order_have_given_points($_GET['key']);
+      //
+      // echo $this->get_order_price() .'<br>';
+      //
+      // echo wc_get_order_id_by_order_key($_GET['key']);
 
       //echo get_user_meta(get_current_user_id() , 'FanPoints')[0];
 
-      echo get_the_author_meta( 'FanPoints', get_current_user_id() );
+      //echo get_the_author_meta( 'FanPoints', get_current_user_id() );
 
       if(!$this->check_if_order_have_given_points($_GET['key']))
       {
