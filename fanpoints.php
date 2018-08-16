@@ -13,16 +13,24 @@
    	exit();
    }
 
+
+
    include_once(plugin_dir_path( __DIR__ ) .'woocommerce/woocommerce.php' );
 
    include_once('class/display_fields.class.php');
    include_once('class/controller.class.php');
+   include_once('class/recurring.class.php');
 
     //wc_get_order_id_by_order_key($_GET['key'])
+
+    //print_r(wc());
 
    $fanPoints = new fanPoints();
    $display = new displayFields();
    $controller = new controller();
+   $recurring = new recurring();
+
+
 
    class fanPoints
    {

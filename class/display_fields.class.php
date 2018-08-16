@@ -22,9 +22,6 @@ class displayFields extends fanPoints
     add_filter( 'manage_users_columns', array($this, 'fanpoints_user_table') );// add the custom userlist column
     add_filter( 'manage_users_custom_column', array($this, 'fanpoints_user_table_row'), 10, 3  ); // add the custom userlist column data
 
-
-    // add_filter( 'manage_users_custom_column', array($this, 'fanpoints_to_dkk_user_table_row'), 11, 4  );// add the custom userlist column data
-
     // add custom FanPoint menu
     add_action( 'admin_menu', array( $this ,'settings_menu' ) );
   }
