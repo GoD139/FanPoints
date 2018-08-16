@@ -1,0 +1,35 @@
+
+
+
+.fp_discount_text{
+  font-size: 26px;
+  margin: 7px;
+  font-weight: 500;
+}
+
+.fp_not_active{
+  color: #595959;
+}
+
+
+.fp_active{
+  color: #50ad90;
+}
+
+
+.btn.btn-apply-points{
+  border-radius: 5px;
+  background: #72caaf;
+  border-color: #50ad90;
+  color: #fff;
+}
+
+.btn.btn-remove-points{
+  border-radius: 5px;
+  color:#fff;
+  background: #e74662;
+}
+
+.btn.btn-remove-points:hover{
+  color:#595959;
+}
