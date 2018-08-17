@@ -145,7 +145,7 @@ class displayFields extends fanPoints
 
 
       <p class="submit">
-        <input type="submit" name="submit" id="submit" class="button button-primary" value="Update"><span class="acf-spinner"></span>
+        <input type="submit" name="fp_settings_submit" id="submit" class="button button-primary" value="Update"><span class="acf-spinner"></span>
       </p>
     </form>
 

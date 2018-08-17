@@ -37,7 +37,7 @@ class controller extends fanPoints
 
     add_action( 'woocommerce_thankyou', array( $this, 'add_points_after_purchase'));
 
-    if(isset($_POST['submit'])){
+    if(isset($_POST['fp_settings_submit'])){
       $this->options_update();
     }
   }
