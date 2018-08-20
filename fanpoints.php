@@ -14,6 +14,8 @@
    }
 
 
+   
+
 
    include_once(plugin_dir_path( __DIR__ ) .'woocommerce/woocommerce.php' );
 
@@ -32,6 +34,8 @@
    $fp_recurring = new recurring();
    $fp_purchase = new purchase();
 
+
+   //$fp_recurring->RecurrenceChecker();
 
    class fanPoints
    {

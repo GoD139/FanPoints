@@ -12,8 +12,10 @@ class recurring extends fanPoints
   {
     $this->oneMonthFromNow = date("Y-m-d H:i:s", strtotime("+1 month"));
 
-    add_action('user_register','executeOnUserRegistration');
-
+    add_action('user_register', array($this, 'executeOnUserRegistration'));
+    
+    //check if a user should get their recurring monthly bonus
+    add_action( 'init', array($this, 'RecurrenceChecker') );
   }
 
 
@@ -23,24 +25,31 @@ class recurring extends fanPoints
 
 
 
-  public function createDateToRecurre($userID)
-  {
-    update_user_meta( $userID, 'FP_Recurring', $this->oneMonthFromNow );
-  }
+  
 
 
   public function RecurrenceChecker()
   {
     foreach(get_users() as $Users){
+      //echo 'get users <br>';
       if($this->checkIfPremium($Users->ID)){
+        //echo 'is premium <br>';
+        //echo get_user_meta($Users->ID, 'FP_Recurring')[0];
         if($this->checkifMoreThanAMonthAgo(get_user_meta($Users->ID, 'FP_Recurring')[0])){
-          $this->givePoints($userID, 3000);
-          $this->createDateToRecurre($userID);
+          //echo 'Is more than a month ago <br>';
+          $this->givePoints($Users->ID, 7800);//give points
+          $this->createDateToRecurre($Users->ID);//give new recurring date
         }
       }
     }
   }
 
+
+
+  public function createDateToRecurre($userID)
+  {
+    update_user_meta( $userID, 'FP_Recurring', $this->oneMonthFromNow );
+  }
 
 
 
@@ -56,10 +65,16 @@ class recurring extends fanPoints
 
   private function checkifMoreThanAMonthAgo($date)
   {
-    if(strtotime($date) < strtotime('-2 min')) {
+    if ($date < date("Y-m-d H:i:s"))
+    {
       return true;
     }
     return false;
+    // 
+    // if(strtotime($date) > strtotime('+2 min')) {
+    //   return true;
+    // }
+    // return false;
   }
 
 
@@ -68,16 +83,14 @@ class recurring extends fanPoints
   private function givePoints($userID, $points)
   {
     $PlayersCurrentPoints = 0;
-    if(get_user_meta($userID() , 'FanPoints')){
-      $PlayersCurrentPoints = get_user_meta($userID() , 'FanPoints')[0];
-    }
+    $FanPoints = get_user_meta($userID , 'FanPoints')[0];
 
     if (wc_memberships_is_user_active_member($userID, 'Premium Subscription')){
       $amount = $points;
-      $amount += $PlayersCurrentPoints;
+      $amount += $FanPoints;
     }
 
-    return update_user_meta( $userID(), 'FanPoints', $amount);
+    return update_user_meta( $userID, 'FanPoints', $amount);
   }
 
 
