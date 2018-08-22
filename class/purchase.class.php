@@ -58,6 +58,15 @@ class purchase extends fanPoints
           echo '<p class="fp_discount_text fp_active">Rabat tilføjet!</p>';
         }
 
+      }else{
+        if(!isset($_SESSION['fp_action']) || $_SESSION['fp_action'] == "remove")
+        {
+          echo '
+          <p class="fp_discount_text fp_not_active">
+          Du kan bruge dine <span class="fp_point_color" style="color:#50ad90;">'. $this->getCurrentUsersPoints() . ' <small>('. round($this->getPointsWorth($this->getCurrentUsersPoints()), 1)  .' DKK)</small></span> FanPoints og få det gratis!</p>';
+        }else if($_SESSION['fp_action'] == "apply"){
+          echo '<p class="fp_discount_text fp_active">Rabat tilføjet!</p>';
+        }
       }
 
       ?>
@@ -134,8 +143,9 @@ class purchase extends fanPoints
     } else if($amt<$bill_price) {
       $u_price = $amt;
     }
-
-      $woocommerce->cart->add_fee( __('FanPoint Rabat', 'woocommerce'), "-".$u_price );
+    
+    $woocommerce->cart->add_fee( __('FanPoint Rabat', 'woocommerce'), '-'.$u_price, false);
+      //$woocommerce->cart->add_fee( __('FanPoint Rabat', 'woocommerce'), "-".$u_price );
   }
 
 
