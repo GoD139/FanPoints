@@ -23,6 +23,7 @@
    include_once('class/controller.class.php');
    include_once('class/recurring.class.php');
    include_once('class/purchase.class.php');
+   include_once('class/shortcode.class.php');
 
     //wc_get_order_id_by_order_key($_GET['key'])
 
@@ -33,6 +34,7 @@
    $fp_controller = new controller();
    $fp_recurring = new recurring();
    $fp_purchase = new purchase();
+   $fp_shortcode = new shortcodes();
 
 
    //$fp_recurring->RecurrenceChecker();
