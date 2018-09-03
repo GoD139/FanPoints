@@ -12,12 +12,22 @@ class purchase extends fanPoints
 
   function __construct()
   {
+    session_start();
+    
+    //print_r($_SESSION);
     //show message to add or remove rewards
     add_action( 'woocommerce_before_cart', array($this, 'phoen_rewpts_action_woocommerce_before_cal_table'), 10, 0);
 
+    
+
+    if($_SESSION['fp_action'] == 'apply'){
+      add_action( 'woocommerce_cart_calculate_fees', array( $this , 'fp_woo_add_cart_fee' ), 10, 1);
+    }
+    
+    add_action('woocommerce_thankyou', array($this, 'remove_points'), 10, 1);
+
     $this->fp_add_fee_from_cart();
     $this->fp_remove_fee_from_cart();
-
   }
 
 
@@ -134,7 +144,8 @@ class purchase extends fanPoints
     global $woocommerce;
 
     $amt = round($this->getPointsWorth($this->getCurrentUsersPoints()), 1);
-    $bill_price = $woocommerce->cart->cart_contents_total;
+    //$bill_price = $woocommerce->cart->cart_contents_total;
+    $bill_price = $woocommerce->cart->cart_contents_total + $woocommerce->cart->get_totals()['cart_contents_tax'];
 
     $u_price=0;
 
@@ -143,14 +154,47 @@ class purchase extends fanPoints
     } else if($amt<$bill_price) {
       $u_price = $amt;
     }
+
+    $_SESSION['fp_amount'] = $u_price;
+    $u_price = $u_price * .8;
     
     $woocommerce->cart->add_fee( __('FanPoint Rabat', 'woocommerce'), '-'.$u_price, false);
-      //$woocommerce->cart->add_fee( __('FanPoint Rabat', 'woocommerce'), "-".$u_price );
   }
 
 
 
+  
 
+function remove_points() { 
+
+  if(isset($_SESSION['fp_amount']))
+  {
+    $FanPoints = get_user_meta(get_current_user_id() , 'FanPoints');
+  
+    $amount = $this->getCurrentUsersPoints() - $this->getMoneyWorth($_SESSION['fp_amount']);
+    
+    update_user_meta( get_current_user_id(), 'FanPoints', $amount);
+    unset($_SESSION['fp_amount']);
+  }
+}
+
+
+
+  // add_action( 'woocommerce_cart_calculate_fees','wc_add_surcharge' ); 
+  //   function wc_add_surcharge() { 
+  //   global $woocommerce; 
+  // 
+  //   if ( is_admin() && ! defined( 'DOING_AJAX' ) ) 
+  //   return;
+  // 
+  //   $county = array('US');
+  //   // change the $fee to set the surcharge to a value to suit
+  //   $fee = 1.00;
+  // 
+  //   if ( in_array( WC()->customer->get_shipping_country(), $county ) ) : 
+  //       $woocommerce->cart->add_fee( 'Surcharge', $fee, true, 'standard' );  
+  //   endif;
+  //   }
 
 
 

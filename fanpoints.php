@@ -81,6 +81,12 @@
      {
        return $points * floatval(get_option('fanpoint_options', false)['FP_Worth']);
      }
+     
+     //fetch the worth of a certain amount of points
+     protected function getMoneyWorth($dkk = 1)
+     {
+       return $dkk / floatval(get_option('fanpoint_options', false)['FP_Worth']);
+     }
 
      protected function numberFormatter($n) {
         // first strip any formatting;
