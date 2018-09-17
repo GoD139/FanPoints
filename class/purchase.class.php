@@ -20,7 +20,7 @@ class purchase extends fanPoints
 
     
 
-    if($_SESSION['fp_action'] == 'apply'){
+    if(isset($_SESSION['fp_action']) == 'apply'){
       add_action( 'woocommerce_cart_calculate_fees', array( $this , 'fp_woo_add_cart_fee' ), 10, 1);
     }
     
