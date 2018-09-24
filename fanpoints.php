@@ -110,7 +110,45 @@
        return $woocommerce->cart->cart_contents_total;
      }
 
+
+
+   protected function get_fanpoint_value_premium_product($productprice){
+       preg_match_all('!\d+!', $productprice, $productpriceOut);
+       $productpriceOut = $productpriceOut[0][0];
+       $amount = get_option('fanpoint_options')['FP_Receives_Premium'];
+
+       return $amount*$productpriceOut;
+
    }
+
+
+	   protected function get_fanpoint_value_basic_product($productprice){
+		   preg_match_all('!\d+!', $productprice, $productpriceOut);
+		   $productpriceOut = $productpriceOut[0][0];
+		   $amount = get_option('fanpoint_options')['FP_Receives_Basic'];
+
+		   return $amount*$productpriceOut;
+
+	   }
+
+
+	   protected function isPremiumMember(){
+         if(wc_memberships_is_user_active_member(get_current_user_id(), 'premium-subscription')){
+             return true;
+         }
+         return false;
+	   }
+
+	   protected function isBasicMember(){
+		   if(wc_memberships_is_user_active_member(get_current_user_id(), 'basic-subscription')){
+			   return true;
+		   }
+		   return false;
+	   }
+
+   }
+
+
 
 
 
