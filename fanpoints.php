@@ -9,9 +9,9 @@
    License: GPL2
    */
 
-   if(!is_plugin_active( 'woocommerce/woocommerce.php' )) {
-   	exit();
-   }
+   // if(!is_plugin_active( 'woocommerce/woocommerce.php' )) {
+   // 	exit();
+   // }
 
 
    
