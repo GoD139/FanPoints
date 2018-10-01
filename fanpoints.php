@@ -68,7 +68,10 @@
      //fetch currently logged in users points
      protected function getCurrentUsersPoints()
      {
-       return get_user_meta(get_current_user_id() , 'FanPoints')[0];
+       if(get_user_meta(get_current_user_id() , 'FanPoints')[0]){
+         return get_user_meta(get_current_user_id() , 'FanPoints')[0];
+       }
+       return 0;
      }
 
      //fetch the worth of a certain amount of points
