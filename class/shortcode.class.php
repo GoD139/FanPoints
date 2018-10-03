@@ -35,7 +35,7 @@ class shortcodes extends fanPoints
   function fp_display_user_get_if_premium( $atts , $content, $tag)
   {
 	  if($this->isPremiumMember())
-  	return "<span class='fp_get_if_premium'> Tjent ". $this->get_fanpoint_value_premium_product($atts['price'])." Fanpoints </span>";
+  	return "<span class='fp_get_if_premium'> Optjen ". $this->get_fanpoint_value_premium_product($atts['price'])." Fanpoints </span>";
   }
 
 	/*
@@ -46,7 +46,7 @@ class shortcodes extends fanPoints
 	function fp_display_user_get_if_basic( $atts )
 	{
 		if($this->isBasicMember())
-		return "<span class='fp_get_if_basic'> Tjent ".$this->get_fanpoint_value_basic_product($atts['price'])." Fanpoints </span>";
+		return "<span class='fp_get_if_basic'> Optjen ".$this->get_fanpoint_value_basic_product($atts['price'])." Fanpoints </span>";
 	}
 
 
