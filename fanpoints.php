@@ -21,6 +21,7 @@
    include_once('class/recurring.class.php');
    include_once('class/purchase.class.php');
    include_once('class/shortcode.class.php');
+   include_once('class/cancel.class.php');
 
 
 
@@ -30,6 +31,7 @@
    $fp_recurring = new recurring();
    $fp_purchase = new purchase();
    $fp_shortcode = new shortcodes();
+   $fp_cancel= new cancel();
 
 
    //$fp_recurring->RecurrenceChecker();
@@ -139,6 +141,20 @@
 
 	   protected function isBasicMember(){
 		   if(wc_memberships_is_user_active_member(get_current_user_id(), 'basic-subscription')){
+			   return true;
+		   }
+		   return false;
+	   }
+
+	   protected function isPremiumMemberid($userid){
+		   if(wc_memberships_is_user_active_member($userid, 'premium-subscription')){
+			   return true;
+		   }
+		   return false;
+	   }
+
+	   protected function isBasicMemberid($userid){
+		   if(wc_memberships_is_user_active_member($userid, 'basic-subscription')){
 			   return true;
 		   }
 		   return false;
