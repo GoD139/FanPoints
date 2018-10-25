@@ -31,6 +31,11 @@ function init(){
 
 	function remove_fanpoints_woocommerce_cancelled_order($order_get_id){
 		$order = wc_get_order( $order_get_id );
+		/*foreach ($order->get_items() as $item){
+			print_r($item);
+		}*/
+
+
 		$orderTotal=$order->get_total();
 
 
@@ -50,6 +55,20 @@ function init(){
 		}
 		else{
 			$userFanpointAmount=0;
+		}
+		$_product= new WC_Product();
+		foreach ($order->get_items() as $item){
+			$_product=$item->get_product();
+			if($_product->get_type()=="subscription"){
+				if($this->isBasicMemberid($userid)) {
+					$orderFanpointValue-=$this->get_fanpoint_value_basic_product(ceil($item->get_total()+$item->get_total_tax()));
+				}
+				elseif ($this->isPremiumMemberid($userid)){
+					$orderFanpointValue -= $this->get_fanpoint_value_premium_product( ceil($item->get_total()+$item->get_total_tax()) );
+
+				}
+
+			}
 		}
 
 		$userFanpointAmount=$userFanpointAmount-$orderFanpointValue;
